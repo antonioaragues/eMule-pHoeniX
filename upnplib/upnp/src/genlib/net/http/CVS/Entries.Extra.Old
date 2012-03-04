@@ -1,0 +1,7 @@
+/Makefile////*///
+/httpparser.c////*///
+/httpreadwrite.c////*///
+/parsetools.c////*///
+/statcodes.c////*///
+/webserver.c////*///
+D/obj///////

@@ -1,0 +1,21 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CxImage", "CxImage.vcproj", "{95CA53EE-60C0-4B2C-A6BA-320B41315858}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{95CA53EE-60C0-4B2C-A6BA-320B41315858}.Debug.ActiveCfg = Debug|Win32
+		{95CA53EE-60C0-4B2C-A6BA-320B41315858}.Debug.Build.0 = Debug|Win32
+		{95CA53EE-60C0-4B2C-A6BA-320B41315858}.Release.ActiveCfg = Release|Win32
+		{95CA53EE-60C0-4B2C-A6BA-320B41315858}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

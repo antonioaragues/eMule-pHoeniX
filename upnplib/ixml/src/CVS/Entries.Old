@@ -1,0 +1,12 @@
+/Makefile/1.1/Wed Jan  5 00:18:47 2005//
+/attr.c/1.1/Wed Jan  5 00:18:48 2005//
+/document.c/1.1/Wed Jan  5 00:18:48 2005//
+/element.c/1.1/Wed Jan  5 00:18:48 2005//
+/ixml.c/1.1/Wed Jan  5 00:18:50 2005//
+/ixmlmembuf.c/1.1/Wed Jan  5 00:18:51 2005//
+/ixmlparser.c/1.1/Wed Jan  5 00:18:51 2005//
+/namedNodeMap.c/1.1/Wed Jan  5 00:18:52 2005//
+/node.c/1.1/Wed Jan  5 00:18:52 2005//
+/nodeList.c/1.1/Wed Jan  5 00:18:53 2005//
+D/inc////
+D/obj////

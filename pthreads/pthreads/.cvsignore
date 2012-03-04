@@ -1,0 +1,7 @@
+Debug
+Release
+pthreadVC.map
+vc70.idb
+vc70.pdb
+pthread.pch
+pthreadVC.pdb

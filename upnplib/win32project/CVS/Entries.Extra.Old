@@ -1,0 +1,9 @@
+/.cvsignore////*///
+/StdAfx.cpp////*///
+/StdAfx.h////*///
+/upnpLib.cpp////*///
+/upnpLib.dsp////*///
+/upnpLib.dsw////*///
+/upnpLib.sln////*///
+/upnpLib.vcproj////*///
+D/Debug///////

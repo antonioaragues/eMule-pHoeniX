@@ -1,0 +1,386 @@
+=========================
+========== ChangeloG ====
+=========================
+     the pHoeniX
+=========================
+
+If you're using an older Phoenix version, remember to update config files (GeoIP.dat and countryflag*.* from the ones released)
+
+eMule 0.45b - pHoeniX 1.16
+
+- Fixed: forget to fix an overflow in download code (could crash)
+- Fixed: download limit works properly (thx Xman)
+- Fixed: fakecheck now works!!
+- Added: red background in search list when a fake is detected.
+- Added: Switch list icons in upload view (From various mods: Morph, peace,...)
+- Added: avoid the silly window syndrome (Xman)
+- Updated: Webcache updated to the last version: 1.9 beta3
+- Added: Don't kill source if it's the only one complet source, it's a friend or a proxy (SiRoB)
+- Updated: proxys database and ip country database
+- Changed: tray icon, now shows a pHoenix :)
+
+
+eMule 0.45b - pHoeniX 1.15
+
+- Added: Some fixes from Maella
+- Updated: some leechers strings and unknown tags from Morph
+- Added: Don´t load suqwt credits file if it is not enabled (morph)
+- Added: SR13: Import Parts
+- Added: some Xman fixes and patches.
+- Added: Sirob minor fix in sendblockrequest
+- Changed: the status file sort.
+- Added: Now the quickstart works also with only kad conecction
+- Changed: our Avoid "Server Busy" dialog to eMulespaña way
+- Added: New option to show in your MSN7 (or above) message field your emule´s speeds (MOnKi/ikabot)
+- Fixed: 0 download with http sources and webcache downloads.
+- Added: Show upload Priority in downloadlist
+- Fixed:Correct stats (netfinity)
+- Other minor fixes and changes
+- Updated: Upnp code from emulespaña cvs
+- Updated: GeoIp database to 3 - April - 2005
+- Supported 4 languages: english, spanish, german (thanks to Xman) and italian (thanks to CiccioBastardo)
+
+eMule 0.45b - pHoeniX 1.14
+
+- Merged all the code to Official eMule 0.45b
+- Updated all languages: italian, german, french and spanish.
+- Updated: GeoIP database to 02-march-2005
+- Updated: modelessDialogs from SLUGFILLER
+- Updated: New upnp code from MoNKi
+!!!!NOTE!!!!!: needed the pthreadVC.dll in your emule dir to work, this dll is provided with binaries
+and installation packages.
+- Fixed: A bug when deleting sockets from upload thread
+- Fixed: toolbar icons were not properly shown with low bits deep (thanks MoNKi)
+- Fixed: an exception when you trying to see shared files from other client
+- Fixed: a possible crash due to SNAFU code.
+- Fixed: Fade out on exit
+- Fixed: Some related with webcache (Sirob & theWizardOfDos)
+- Fixed: A bug drawing columns in upload and queue list in a rare situation
+- Fixed: memory exception in server socket (theWizarOfDos)
+- Fixed: some bugs in Bandwidhtcontrol (Xman)
+- Fixed: Utf-8 String On Websearchs (MoNKi)
+- Added: An option in preferences to enable/disable vertical hour lines in graphs
+- Added: on quickstart time, the manage connection is disabled
+- Added: New style to rectagle selection in lists, like in winXP folders (Double buffered style)
+NOTE: if you don´t like it, edit your preferences.ini and set DBStyle=0. Only with compatible S.O
+- Added: Option (in NAFC dialog) to recheck NAFC after an IP change (Xman)
+- Added: emugle web search in search methods (Monki)
+- Added: pHoeniX image background in some menus. You can disable them in preferences
+- Added: some code improvements and fixes from netfinity
+- Added: New friends pHoeniX themed group box.
+- Changed: the refresh frecuency of the list has been decreased
+- Changed: icon notify message in tray has changed with blinking message icon, from MoNki
+- Changed: now, bandwidhtcontrol is threadsafe (Maella)
+- changed: new emule icon (MoNKi)
+- Deleted: anticorruption test from Maella, useless.
+- Other minor fixes and changes
+
+
+eMule 0.44d - pHoeniX 1.13
+
+- Updated all languages: italian, german, french and spanish
+- Some fixes for webcache from Morph
+- Added minimize buttons to modeless (Slugfiller)
+- Fixed the problem with categories in transferwindow
+- Updated: indexPartFiles from SF-IOM mod
+- Changed: the option "Switch to unlimited speed when no downloads" have been changed
+by..."Switch to max upload capacity speed when no downloads"
+- Fixed: Show country flags and names in upload list and queue list
+- Fixed: fakecheck update
+- Fixed: show in bold preference
+- Added: New language strings
+- Changed: some code of minimize slots
+- Litte fix with pHoeniX log
+- Full rework of upload slots resort: now, if "Cumulate bandwidht" is enabled, it focalizes always
+to first slot (number one).
+
+
+eMule 0.44d - pHoeniX 1.12
+
+- Merged all code to 0.44d
+- ADDED: New dialog in servers tab to select network adapter
+- ADDED: Patch to reask state by SiRoB
+- ADDED: SUQWT (Save Upload Queue Waiting Time), if you enable it, you save the waiting time of the clients
+and when they reconnect to you in the future, the last score is restored.
+IMPORTANT!!! this option can cause the your clients.met corruption, please before use it, make a backup of
+your met files :).
+- ADDED: Don´t refresh clients if no needed and don´t draw hidden by SiRob
+- ADDED: Reconnect kademila (if enabled) on connection lost by Pawcio
+- ADDED: In sharedlist dialog now you can see the size of files
+- ADDED: Friends graph in statistics
+- ADDED: Categories tab hidden if no needed by Sirob
+- ADDED: Dinamic trickle slot speed by Sirob
+- ADDED: Now, the SLS sources are shown in download list too as kad,ed2k,...
+- ADDED: Drop stalled downloads by Netfinity
+- ADDED: Option to see downloading files in bold
+- ADDED: Some colors in names by morph-eatshare (in the future will be configurable)
+- ADDED: ICS, Webcache and modname tags are sent only when needed to save bandwidht
+- ADDED: More cpu info in Optimizer by LSD
+- ADDED: New option to swicht to unlimited speed if there are no active downloads. Emule
+switch automatically to normal speed when detects any download. This feature doen´t work the first
+5 minutes and when you add a new download or resume one to allow get sources. If you change the upload
+speed in preferences during the execution...the upload you set is saved as the temp upload.
+- ADDED: In the queue count now shows the queue size (remember that this size is bigger than that you
+set in preferences because of zz sofqueue)
+- ADDED: Optional fadeout on exit and only availabre for winXP
+- ADDED: In tools menu you have a new option to make an screenshot, for newbies (eWombat)
+- ADDED: thePhoenixTeam members in "about emule" Dialog
+- FIXED: the comments ratio was always "not rated"
+- FIXED: Some fixes in oscopectrl.cpp by Apph
+- FIXED: Two fixes in webserver by CML
+- FIXED: The download button icon did´t change
+- FIXED: The status bar didn´t work properly when it was with USS and it shown a wrong tooltip
+- FIXED: Some related with unicode
+- FIXED: Now, bbcode elinks are compatible with all forums
+- FIXED: Cancel button when adding an elink
+- FIXED: Quickstar did´t work properly
+- FIXED: Some fixes in webcache and a little improvement
+- FIXED: Friends info
+- FIXED: Ipcountry
+- FIXED: If there was a categorie with the "&" character wasn´t shown properly
+- FIXED: Related with >2Gb files
+- DELETED: CTitleMenu is not used by phoenix (we use CMenuXP)
+- DELETED: Elandal multipleinstances
+- DELETED: Some powershare unedded code
+- DELETED: Apply to data + overhead...
+- REWORKED: UploadBandwidhtThrottler and BandwidhtControl (and will be more in future)
+- CHANGED: the debug files Url
+- CHANGED: Some default options
+- CHANGED: xmas splash!!! thanks MoNKi!!!
+
+NOTE: Id you enable "New upload slot sharping" or Auto S/B by NAFC you´ll need to set higher
+the max upload limit (about 20-30%) to get good performance.
+
+[SUPPORTED LANGUAGES] - English, Spanish, Italian, German and French
+
+		       Thanks to Skywalker and CiccioBastardo
+
+
+ ---------------------------------------------------------------------------------------------
+
+eMule 0.44b - pHoeniX 1.11
+
+[UPDATED] - Webcache 1.2f
+[UPDATED] - libpng 1.2.7
+
+[ADDED] - Added creation and support of friend eLinks (based upon userhash)
+	  friend eLink: ed2k://|friend|<nick>|<userhash>|/
+	  friend list:  ed2k://|friendlist|<URL of emfriends.met>|/
+	  tag: [TPT] - Announ: -Friend eLinks-
+[ADDED] - Update friendlist tag: [TPT] - Morph. Manual eMfriend.met download
+
+[FIXED] - Invisible mode, doesn't store selected option
+[FIXED] - Fakecheck, doesn't allow to put an URL
+[FIXED] - Add pause files doesn't work 
+[FIXED] - QuickStart doesn't work well with default options
+[FIXED] - A null socket could cause a program error
+[FIXED] - Banner in preferences doesn't fit
+[FIXED] - Export statistics doesn't work with unicode
+[FIXED] - Save ed2klink to disk doesn't store correctly
+[FIXED] - Some sources keep in asking state forever
+[FIXED] - Fix en hardlimit
+[FIXED] - Some potential crash in categories
+[FIXED] - Some porting to Unicode
+[FIXED] - Crash when trying to do an autobackup in preferences
+
+[SUPPORTED LANGUAGES] - English, Spanish, Italian, German and French
+
+		       Thanks to Skywalker and CiccioBastardo
+
+---------------------------------------------------------------------------------------------
+
+
+eMule 0.44b - pHoeniX 1.10
+
+[MERGED] - Full porting to eMule 0.44b official. And full porting of all pHoenix
+features that were outdated
+[ADDED] - Webcache 1.2e (preferences moved to pHoeniX eXtreme)
+[ADDED] - ICS  (enkeyDEV)
+[ADDED] - You can set server order connection using linear priority [TPT]
+[ADDED] - 30sec delay on start-up (to avoid server busy messages) [TPT]
+[ADDED] - Anti HideOs (Netfinity)
+[FIXED] - fixed powershare
+[FIXED] - unicode fixes from other mods (pawcio, stormit, morph)
+[FIXED] - An official bug in irc tab when you try to hide the status column [TPT]
+[FIXED] - Upload and download stop reasons
+[FIXED] - Auto HardLimit
+[CHANGED] - Connection preferences have been changed from slider to box
+[UPDATED] - LibGeoIp
+[UPDATED] - Snafu v3
+[UPDATED] - HistoryList
+[UPDATED] - pHoeniX features reworked to UNICODE
+[SUPPORTED LANGUAGES] - English, Spanish, Italian, German and French
+
+
+---------------------------------------------------------------------------------------------
+
+
+eMule 0.43b - pHoeniX 1.9.1
+
+NOTE: compiled with libpng 1.2.6 RC5 to avoid security problems in 1.2.5
+
+- Fix: Bug when file was canceled or removed from shared and waiting queue was sorted
+- Fix: Bug in notifier. It didn´t save a preference.
+- Fix: Column names in shared tab were shown wrong when spread bars were enabled
+- Fix: There were client icons shown incorrectly in donwload and download clients tab.
+- Fix: In statistics, only two ratios were shown. Now, ratio session(excluding friends) is shown too.
+- Fix: Bug with speed calculate in MinToMB. (thanks to Pawcio)
+- FiX: Bug when you enabled Cumulate Bandwidht and Nafc at the same time (thanks to Pawcio)
+- Fix: There was a tooltip in status bar that only shown "you have pending messages" and you did´t have them.
+- Fix: there was a bug in CDownloadQueue::Process in filelist sorting (thanks to Maella)
+- Fix: a bug in friends tab. The context menu in tab didn´t work properly
+- Fix: a duplicated string in shared list tab
+- Fix: a bug when you cancel a download
+- Changed: the trickle slot speed has been increased to 0.5kbs to prevent fast client drops in upload list (in test)
+- Changed: a code to try to prevent a crash in CUpDownClient destructor where we got a crash dump (thanks to Pawcio)
+- Changed: a code in tray context menu like official.
+- Changed: some code in preferences
+- Changed: the color effect in preferences tooltips
+- Changed: the url to search for fakes in transfers window to http://donkeyfakes.gambri.net
+- Added: morph antifakes system (see it in pHoeniX one > security) and check in search tab.
+- Added: new languages dll --> german and french (thanks to Skyw4lker)
+- Added: new strings in NAFC to translate
+- Updated: spanish language
+- Updated: the preferences banner with pHoeniX crystal (thanks to MoNKi, as ever :D)
+
+---------------------------------------------------------------------------------------------
+
+eMule 0.43b - pHoeniX 1.9
+
+- Merged all the code to official 0.43b.
+- Updated to SNAFU v3 [eWombat]
+- Updated Show countries
+- Updated GeoIp.dat to August 2004.
+- Adapted 0.43b downloadmanager to work with linear priorities.
+- Updated HideOs
+- In preferences: shown filesystem icon, now affects to sharefiles list.
+- ADDED Powershare [Original from ZZ and changed by Morph and Pawcio] (Tag: [TPT] - Powershare)
+- Fix friend slot and a little rewrite.
+- ADDED Win2000 transparecens from MoNKi
+- Added tooltips in sharefiles tab.
+- Fixed bug on clear completed
+- Fixed bug on adding a file
+- Fixed bug showing tray
+- Fixed bug with preferences
+- Fixed bug in friends window.
+- Added some new icons and pHoeniX icon when a pHoeniX client is detected
+- Added in preferences: shown overhead graph
+- Added tooltips in preferences
+
+Supported languages: english and spanish. If you want to support your language, please
+send us a private message.
+
+Special thanks to PAWCIO
+
+eMule Phoenix 0.42g 1.8
+
+
+Added: Download manager from zz, but based on LP order. [TPT] - ZZ:DownloadManager
+	If you download a series of files that you want to get in order, do like this:
+	1. Create a category for the series.
+	2. Put the files you want ordered in that category.
+	3. Order them in the LP you want (lower LP will be selected first to complete)
+	4. Right click on the category and enable "Download in LP order".
+	Done! eMule will now try to put all sources on the first file, until it is completed. The second file will get any sources that the first file doesn't want, etc.
+Added: UPnPNAT support [TPT] - MoNKi: -UPnPNAT Support-
+Added: If you add a file with sources and the file is already downloading, the sources are added [TPT] - Add sources
+Updated: flags images from Morph.
+Updated: New libgeoip library 1.3.2
+Updated: GeoIP database to June
+Fix: Error in priority cat selection. It didn't work correctly.
+Fix: Command buttons in friend window didn't work
+Fix: Crashrpt didn't work.
+Fix: Memory leak when running as secure user
+Fix: Now if NAFC is selected change upload in tray icon, from mobile emule, scheduler or minimize change the NAFC value
+Fix: Fade on close now work again
+Fix: In some systems flags weren't show, now it works.
+Fix: Other minor things
+
+eMule Phoenix 0.42g 1.7
+
+Added: memory optimizations from emule+
+Updated: country database GeoIp.dat
+Fix: COntext menu on friend tab
+Fix: Refresh number of clients downloading
+Fix: Cumulative uploads and downlads were saving wrongly
+Fix: virtualdirs were not working correctly, they don't show shared files
+Fix: Serverlist columns weren't saving correctly
+Some other minor fixes and improvements from 1.6
+
+eMule Phoenix 0.42g 1.6
+
+Update to version 0.42g
+Added backup config and part files in preferences ([TPT]- TBH-AutoBackup)
+Added short friend list columns
+Updates features from last SF-IOM version
+ (viewSharedFiles, showComments, mergeknown, modelessdialogs...)
+Removed LionHeart countermeasure to use the official and due to LH is now GPL compliant
+Removed: Save statistics in part files due to mergeknown does this work now
+Fix: number of downloads wasn't updated when download clients list was active
+Fix: start next paused file didn't select the correct one. Now it will select the lowest 
+     LP in the category or the older one
+Fix: When a download was completed or removed it didn't remove all files associated
+Fix: Update bytes for part files was increased too much. Now it fix, but it will only work for new downloads.
+Fix: Some other minor fails
+
+
+
+eMule Phoenix 0.42e 1.5
+
+Added HL sivka ([TPT] - Sivka AutoHL)
+Added open ports by lungdunum ([TPT] - Aux Ports)
+Fading emule when close ([TPT] - Fade Window on Exit)
+Friend list can be shorted
+Fix:
+ - some memory leaks
+ - save sources was not working well
+ - some fails in added a link (thanks to Sirob for his help)
+ - mod was not correctly identified
+ - sometimes downloaded history closes emule
+ - active downloads are shown correctly
+
+eMule Phoenix 0.42e 1.4
+
+- Adapted to 0.42e
+- Country database updated to April 2004 (GeoIP.dat from Maxmind)
+- Clean resources not used
+- Added mergeknown from slugfiller. Based on last mod from Slugfiller and from Morph. Fix memory leak ([TPT] - SLUGFILLER: mergeKnown)
+- Fix memory leak loading corrupt known.met
+- Fix memory leak adding a file that it was already downloading
+- Now preferences for showing network graph and memory graph are saved correctly
+
+
+eMule Phoenix 0.42d 1.3.1
+
+- Fix error when changing statistics preferences
+
+eMule Phoenix 0.42d 1.3
+
+Fix:
+- Sources reask times was wrong in previous version
+- See shared files didn't work
+- Some fixes in phoenix debug logs
+- Some fixes in contextual menues
+- Contextual menu in shared windows showed disabled open file, open folder and rename always
+- Waiting clients weren't refresh correctly
+- See client details dialog in some windows wasn't open correctly
+- Set program priority didn't work
+- Downloading an http file showed "%%" 
+- Sidebanner fix (thanks to .: Elite :.)
+Added:
+- Manage connections ([TPT] - Pawcio: MAC). Allows manage connections to avoid hang internet connection
+- Minimize slots ([TPT] - Pawcio: MUS)
+- Multiple instances (Elandal: multipleInstance)
+- New statisticis window from morph ([TPT] - New statistics)
+- New flags from morph. Also there are new flags for WindowsXP (countryflag32.dll) 
+   (Copy files from config dir)
+- Updated country database from Maxmind (Copy geoip.dat from config dir)
+- Added memory consuming graph (optional in preferences)
+- Network adapter graph is optional now
+
+==========================================================================================
+
+
+    				by TPT - the pHoeniX teAm
+			    >>>>>>>> ikAbOt & Pichuei <<<<<<<<
+

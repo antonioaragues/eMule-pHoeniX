@@ -1,0 +1,21 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "languages - French (France)", "fr_FR.vcproj", "{A7E4E792-AA76-4977-A725-1C428AADE381}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Dynamic = Dynamic
+		Static = Static
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{A7E4E792-AA76-4977-A725-1C428AADE381}.Dynamic.ActiveCfg = Dynamic|Win32
+		{A7E4E792-AA76-4977-A725-1C428AADE381}.Dynamic.Build.0 = Dynamic|Win32
+		{A7E4E792-AA76-4977-A725-1C428AADE381}.Static.ActiveCfg = Static|Win32
+		{A7E4E792-AA76-4977-A725-1C428AADE381}.Static.Build.0 = Static|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal
