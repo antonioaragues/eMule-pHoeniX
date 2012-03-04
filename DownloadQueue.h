@@ -195,7 +195,7 @@ protected:
 	bool	SendNextUDPPacket();
 	void	ProcessLocalRequests();
 	int		GetMaxFilesPerUDPServerPacket() const;
-	bool	SendGlobGetSourcesUDPPacket(CSafeMemFile* data);
+	bool	SendGlobGetSourcesUDPPacket(CSafeMemFile* data, bool bExt2Packet);
 
 private:
 	// SLUGFILLER: checkDiskspace

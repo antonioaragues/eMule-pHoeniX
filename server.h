@@ -40,6 +40,7 @@ struct ServerMet_Struct {
 // Server UDP flags
 #define	SRV_UDPFLG_EXT_GETSOURCES	0x00000001
 #define	SRV_UDPFLG_EXT_GETFILES		0x00000002
+#define	SRV_UDPFLG_EXT_GETSOURCES2	0x00000020
 
 class CServer{
 public:

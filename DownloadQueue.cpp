@@ -1514,7 +1514,8 @@ void CDownloadQueue::DeleteAll(){
 // ----------------------------
 // 576 - 30 bytes of header (28 for UDP, 2 for "E3 9A" edonkey proto) = 546 bytes
 // 546 / 16 = 34
-#define MAX_FILES_PER_UDP_PACKET	31	// 2+16*31 = 498 ... is still less than 512 bytes!!
+#define MAX_FILES_PER_UDP_PACKET_G1	31	// 2+16*31 = 498 ... is still less than 512 bytes!!
+#define MAX_FILES_PER_UDP_PACKET_G2	25	// 2+20*25 = 502
 
 #define MAX_REQUESTS_PER_SERVER		35
 
@@ -1523,9 +1524,10 @@ int CDownloadQueue::GetMaxFilesPerUDPServerPacket() const
 	int iMaxFilesPerPacket;
 	if (cur_udpserver && cur_udpserver->GetUDPFlags() & SRV_UDPFLG_EXT_GETSOURCES)
 	{
+		const int nMaxFilePerUDP = ((cur_udpserver->GetUDPFlags() & SRV_UDPFLG_EXT_GETSOURCES2) > 0)? MAX_FILES_PER_UDP_PACKET_G2 : MAX_FILES_PER_UDP_PACKET_G1; 
 		// get max. file ids per packet
 		if (m_cRequestsSentToServer < MAX_REQUESTS_PER_SERVER)
-			iMaxFilesPerPacket = min(MAX_FILES_PER_UDP_PACKET, MAX_REQUESTS_PER_SERVER - m_cRequestsSentToServer);
+			iMaxFilesPerPacket = min(nMaxFilePerUDP, MAX_REQUESTS_PER_SERVER - m_cRequestsSentToServer);
 		else{
 			ASSERT(0);
 			iMaxFilesPerPacket = 0;
@@ -1537,20 +1539,26 @@ int CDownloadQueue::GetMaxFilesPerUDPServerPacket() const
 	return iMaxFilesPerPacket;
 }
 
-bool CDownloadQueue::SendGlobGetSourcesUDPPacket(CSafeMemFile* data)
+bool CDownloadQueue::SendGlobGetSourcesUDPPacket(CSafeMemFile* data, bool bExt2Packet)
 {
 	bool bSentPacket = false;
 
-	if (   cur_udpserver
-		&& (theApp.serverconnect->GetCurrentServer() == NULL || 
-			cur_udpserver != theApp.serverlist->GetServerByAddress(theApp.serverconnect->GetCurrentServer()->GetAddress(),theApp.serverconnect->GetCurrentServer()->GetPort())))
+	if (cur_udpserver)
 	{
-		ASSERT( data->GetLength() > 0 && data->GetLength() % 16 == 0 );
-		int iFileIDs = data->GetLength() / 16;
-		if (thePrefs.GetDebugServerUDPLevel() > 0)
-			Debug(_T(">>> Sending OP__GlobGetSources to server(#%02x) %-15s (%3u of %3u); FileIDs=%u\n"), cur_udpserver->GetUDPFlags(), cur_udpserver->GetAddress(), m_iSearchedServers + 1, theApp.serverlist->GetServerCount(), iFileIDs);
+		int iPacketSize = data->GetLength();
 		Packet packet(data);
+		data = NULL;
+		int iFileIDs;
+		if (bExt2Packet){
+			ASSERT( iPacketSize > 0 && iPacketSize % 20 == 0 );
+			iFileIDs = (int)iPacketSize / 20;
+			packet.opcode = OP_GLOBGETSOURCES2;
+		}
+		else{
+			ASSERT( iPacketSize > 0 && iPacketSize % 16 == 0 );
+			iFileIDs = (int)iPacketSize / 16;
 		packet.opcode = OP_GLOBGETSOURCES;
+		}
 		theStats.AddUpDataOverheadServer(packet.size);
 		theApp.serverconnect->SendUDPPacket(&packet,cur_udpserver,false);
 		
@@ -1567,20 +1575,32 @@ bool CDownloadQueue::SendNextUDPPacket()
         || !theApp.serverconnect->IsUDPSocketAvailable() 
         || !theApp.serverconnect->IsConnected())
 		return false;
-	if (!cur_udpserver){
-		if ((cur_udpserver = theApp.serverlist->GetNextServer(cur_udpserver)) == NULL){
-			TRACE("ERROR:SendNextUDPPacket() no server found\n");
+
+	CServer* pConnectedServer = theApp.serverconnect->GetCurrentServer();
+	if (pConnectedServer)
+		pConnectedServer = theApp.serverlist->GetServerByAddress(pConnectedServer->GetAddress(), pConnectedServer->GetPort());
+
+	if (!cur_udpserver)
+	{
+		while ((cur_udpserver = theApp.serverlist->GetNextServer(cur_udpserver)) != NULL) {
+			if (cur_udpserver == pConnectedServer)
+				continue;
+			break;
+		}
+		if (cur_udpserver == NULL) {
 			StopUDPRequests();
-		};
+			return false;
+		}
 		m_cRequestsSentToServer = 0;
 	}
 
 	// get max. file ids per packet for current server
 	int iMaxFilesPerPacket = GetMaxFilesPerUDPServerPacket();
+	bool bGetSources2Packet = (cur_udpserver->GetUDPFlags() & SRV_UDPFLG_EXT_GETSOURCES2) > 0;
 
 	// loop until the packet is filled or a packet was sent
 	bool bSentPacket = false;
-	CSafeMemFile dataGlobGetSources(16);
+	CSafeMemFile dataGlobGetSources(20);
 	int iFiles = 0;
 	while (iFiles < iMaxFilesPerPacket && !bSentPacket)
 	{
@@ -1611,23 +1631,23 @@ bool CDownloadQueue::SendNextUDPPacket()
 						// if there are pending requests for the current server, send them
 						if (dataGlobGetSources.GetLength() > 0)
 						{
-							if (SendGlobGetSourcesUDPPacket(&dataGlobGetSources))
+							if (SendGlobGetSourcesUDPPacket(&dataGlobGetSources, bGetSources2Packet))
 								bSentPacket = true;
 							dataGlobGetSources.SetLength(0);
 						}
 
 						// get next server to ask
-						cur_udpserver = theApp.serverlist->GetNextServer(cur_udpserver, lastfile);	// [TPT] - itsonlyme: cacheUDPsearchResults
+						while ((cur_udpserver = theApp.serverlist->GetNextServer(cur_udpserver)) != NULL) {
+							if (cur_udpserver == pConnectedServer)
+								continue;
+							break;
+						}
 						m_cRequestsSentToServer = 0;
-						if (cur_udpserver == NULL)
-						{
+						if (cur_udpserver == NULL) {
 							// finished asking all servers for all files
 							if (thePrefs.GetDebugServerUDPLevel() > 0 && thePrefs.GetDebugServerSourcesLevel() > 0)
 								Debug(_T("Finished UDP search processing for all servers (%u)\n"), theApp.serverlist->GetServerCount());
-
-							lastudpsearchtime = ::GetTickCount();
-							lastfile = NULL;
-							m_iSearchedServers = 0;
+							StopUDPRequests();
 							return false; // finished (processed all file & all servers)
 						}
 						m_iSearchedServers++;
@@ -1640,6 +1660,7 @@ bool CDownloadQueue::SendNextUDPPacket()
 
 						// get max. file ids per packet for current server
 						iMaxFilesPerPacket = GetMaxFilesPerUDPServerPacket();
+						bGetSources2Packet = (cur_udpserver->GetUDPFlags() & SRV_UDPFLG_EXT_GETSOURCES2) > 0;
 
 						// have selected a new server; get first file to search sources for
 						nextfile = filelist.GetHead();
@@ -1657,17 +1678,23 @@ bool CDownloadQueue::SendNextUDPPacket()
 		// [TPT] - Sivka AutoHL
 		if (!bSentPacket && nextfile && nextfile->GetSourceCount() < nextfile->GetMaxSourcesUDPLimit())
 		{
+			if (bGetSources2Packet){
+				// GETSOURCES2 Packet (<HASH_16><SIZE_4> *)
 			dataGlobGetSources.WriteHash16(nextfile->GetFileHash());
+				dataGlobGetSources.WriteUInt32(nextfile->GetFileSize());
+			}
+			else{
+				// GETSOURCES Packet (<HASH_16> *)
+				dataGlobGetSources.WriteHash16(nextfile->GetFileHash());
+			}
 			iFiles++;
-			if (thePrefs.GetDebugServerUDPLevel() > 0 && thePrefs.GetDebugServerSourcesLevel() > 0)
-				Debug(_T(">>> Queued  OP__GlobGetSources to server(#%02x) %-15s (%3u of %3u); Buff  %u=%s\n"), cur_udpserver->GetUDPFlags(), cur_udpserver->GetAddress(), m_iSearchedServers + 1, theApp.serverlist->GetServerCount(), iFiles, DbgGetFileInfo(nextfile->GetFileHash()));
 		}
 	}
 
 	ASSERT( dataGlobGetSources.GetLength() == 0 || !bSentPacket );
 
 	if (!bSentPacket && dataGlobGetSources.GetLength() > 0)
-		SendGlobGetSourcesUDPPacket(&dataGlobGetSources);
+		SendGlobGetSourcesUDPPacket(&dataGlobGetSources, bGetSources2Packet);
 
 	// send max 35 UDP request to one server per interval
 	// if we have more than 35 files, we rotate the list and use it as queue
@@ -1684,11 +1711,16 @@ bool CDownloadQueue::SendNextUDPPacket()
 		}
 
 		// and next server
-		cur_udpserver = theApp.serverlist->GetNextServer(cur_udpserver);
+		while ((cur_udpserver = theApp.serverlist->GetNextServer(cur_udpserver)) != NULL) {
+			if (cur_udpserver == pConnectedServer)
+				continue;
+			break;
+		}
 		m_cRequestsSentToServer = 0;
 		if (cur_udpserver == NULL){
-			lastudpsearchtime = ::GetTickCount();
-			lastfile = NULL;
+			if (thePrefs.GetDebugServerUDPLevel() > 0 && thePrefs.GetDebugServerSourcesLevel() > 0)
+				Debug(_T("Finished UDP search processing for all servers (%u)\n"), theApp.serverlist->GetServerCount());
+			StopUDPRequests();
 			return false; // finished (processed all file & all servers)
 		}
 		m_iSearchedServers++;
@@ -1698,10 +1730,12 @@ bool CDownloadQueue::SendNextUDPPacket()
 	return true;
 }
 
-void CDownloadQueue::StopUDPRequests(){
-	cur_udpserver = 0;
+void CDownloadQueue::StopUDPRequests()
+{
+	cur_udpserver = NULL;
 	lastudpsearchtime = ::GetTickCount();
-	lastfile = 0;
+	lastfile = NULL;
+	m_iSearchedServers = 0;
 }
 
 // SLUGFILLER: checkDiskspace
@@ -2236,8 +2270,10 @@ void CDownloadQueue::ProcessLocalRequests()
 				iFiles++;
 				
 				// create request packet
-				Packet* packet = new Packet(OP_GETSOURCES,16);
-				md4cpy(packet->pBuffer,cur_file->GetFileHash());
+				CSafeMemFile smPacket;
+				smPacket.WriteHash16(cur_file->GetFileHash());
+				smPacket.WriteUInt32(cur_file->GetFileSize());
+				Packet* packet = new Packet(&smPacket, OP_EDONKEYPROT, OP_GETSOURCES);
 				if (thePrefs.GetDebugServerTCPLevel() > 0)
 					Debug(_T(">>> Sending OP__GetSources(%2u/%2u); %s\n"), iFiles, iMaxFilesPerTcpFrame, DbgGetFileInfo(cur_file->GetFileHash()));
 				dataTcpFrame.Write(packet->GetPacket(), packet->GetRealPacketSize());
